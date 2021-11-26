@@ -92,7 +92,8 @@ def load_StudioGAN_ckpts(ckpt_dir, load_best, Gen, Dis, g_optimizer, d_optimizer
                   is_freezeD=is_freezeD)
 
     if apply_g_ema:
-        Gen_ema_ckpt_path = glob.glob(join(ckpt_dir, "model=G_ema-{when}-weights-step*.pth".format(when=when)))[0]
+        # Gen_ema_ckpt_path = glob.glob(join(ckpt_dir, "model=G_ema-{when}-weights-step*.pth".format(when=when)))[0]
+        Gen_ema_ckpt_path = glob.glob(join(ckpt_dir, "model-G_ema-{when}-weights-step*.pth".format(when=when)))[0]
         load_ckpt(model=Gen_ema,
                   optimizer=None,
                   ckpt_path=Gen_ema_ckpt_path,
@@ -124,8 +125,10 @@ def load_StudioGAN_ckpts(ckpt_dir, load_best, Gen, Dis, g_optimizer, d_optimizer
 
 def load_best_model(ckpt_dir, Gen, Dis, apply_g_ema, Gen_ema, ema):
     Gen, Dis, Gen_ema = misc.peel_models(Gen, Dis, Gen_ema)
-    Gen_ckpt_path = glob.glob(join(ckpt_dir, "model=G-best-weights-step*.pth"))[0]
-    Dis_ckpt_path = glob.glob(join(ckpt_dir, "model=D-best-weights-step*.pth"))[0]
+    # Gen_ckpt_path = glob.glob(join(ckpt_dir, "model=G-best-weights-step*.pth"))[0]
+    # Dis_ckpt_path = glob.glob(join(ckpt_dir, "model=D-best-weights-step*.pth"))[0]
+    Gen_ckpt_path = glob.glob(join(ckpt_dir, "model-G-best-weights-step*.pth"))[0]
+    Dis_ckpt_path = glob.glob(join(ckpt_dir, "model-D-best-weights-step*.pth"))[0]
 
     load_ckpt(model=Gen,
               optimizer=None,
@@ -144,7 +147,8 @@ def load_best_model(ckpt_dir, Gen, Dis, apply_g_ema, Gen_ema, ema):
                                                   is_freezeD=False)
 
     if apply_g_ema:
-        Gen_ema_ckpt_path = glob.glob(join(ckpt_dir, "model=G_ema-best-weights-step*.pth"))[0]
+        # Gen_ema_ckpt_path = glob.glob(join(ckpt_dir, "model=G_ema-best-weights-step*.pth"))[0]
+        Gen_ema_ckpt_path = glob.glob(join(ckpt_dir, "model-G_ema-best-weights-step*.pth"))[0]
         load_ckpt(model=Gen_ema,
                   optimizer=None,
                   ckpt_path=Gen_ema_ckpt_path,
@@ -168,7 +172,8 @@ def check_is_pre_trained_model(ckpt_dir, GAN_train, GAN_test):
     else:
         mode = "real_trained"
 
-    ckpt_list = glob.glob(join(ckpt_dir, "model=C-{mode}-best-weights.pth".format(mode=mode)))
+    # ckpt_list = glob.glob(join(ckpt_dir, "model=C-{mode}-best-weights.pth".format(mode=mode)))
+    ckpt_list = glob.glob(join(ckpt_dir, "model-C-{mode}-best-weights.pth".format(mode=mode)))
     if len(ckpt_list) == 0:
         is_pre_train_model = False
     else:
@@ -177,7 +182,8 @@ def check_is_pre_trained_model(ckpt_dir, GAN_train, GAN_test):
 
 
 def load_GAN_train_test_model(model, mode, optimizer, RUN):
-    ckpt_path = join(RUN.ckpt_dir, "model=C-{mode}-best-weights.pth".format(mode=mode))
+    # ckpt_path = join(RUN.ckpt_dir, "model=C-{mode}-best-weights.pth".format(mode=mode))
+    ckpt_path = join(RUN.ckpt_dir, "model-C-{mode}-best-weights.pth".format(mode=mode))
     ckpt = torch.load(ckpt_path)
 
     model.load_state_dict(ckpt["state_dict"])
