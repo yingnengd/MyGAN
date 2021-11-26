@@ -397,7 +397,8 @@ def peel_model(model):
 
 
 def save_model(model, when, step, ckpt_dir, states):
-    model_tpl = "model={model}-{when}-weights-step={step}.pth"
+    # model_tpl = "model={model}-{when}-weights-step={step}.pth"
+    model_tpl = "model-{model}-{when}-weights-step-{step}.pth"
     model_ckpt_list = glob.glob(join(ckpt_dir, model_tpl.format(model=model, when=when, step="*")))
     if len(model_ckpt_list) > 0:
         find_and_remove(model_ckpt_list[0])
@@ -406,7 +407,8 @@ def save_model(model, when, step, ckpt_dir, states):
 
 
 def save_model_c(states, mode, RUN):
-    ckpt_path = join(RUN.ckpt_dir, "model=C-{mode}-best-weights.pth".format(mode=mode))
+    # ckpt_path = join(RUN.ckpt_dir, "model=C-{mode}-best-weights.pth".format(mode=mode))
+    ckpt_path = join(RUN.ckpt_dir, "model-C-{mode}-best-weights.pth".format(mode=mode))
     torch.save(states, ckpt_path)
 
 
