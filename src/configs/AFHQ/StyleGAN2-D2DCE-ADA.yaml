@@ -13,7 +13,8 @@
 
 DATA:
   name: "AFHQ"
-  img_size: 512
+  # img_size: 512
+  img_size: 420
   num_classes: 3
 MODEL:
   backbone: "stylegan2"
@@ -24,8 +25,10 @@ MODEL:
   g_act_fn: "Auto"
   d_act_fn: "Auto"
   z_prior: "gaussian"
-  z_dim: 512
-  w_dim: 512
+  # z_dim: 512
+  # w_dim: 512
+  z_dim: 420
+  w_dim: 420
   g_conv_dim: "N/A"
   d_conv_dim: "N/A"
   apply_g_ema: True
@@ -40,8 +43,8 @@ OPTIMIZATION:
   # These values will be slightly changed if lazy regularization is applied.
   # batch_size: 64
   # acml_steps: 1
-  batch_size: 8
-  acml_steps: 8
+  batch_size: 32
+  acml_steps: 2
   g_lr: 0.0025
   d_lr: 0.0025
   beta1: 0
