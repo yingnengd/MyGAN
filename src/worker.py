@@ -851,23 +851,30 @@ class WORKER(object):
         if self.Gen_ema is not None:
             g_ema_states = {"state_dict": Gen_ema.state_dict()}
 
-        misc.save_model(model="G", when=when, step=step, ckpt_dir=self.RUN.ckpt_dir, states=g_states)
-        misc.save_model(model="D", when=when, step=step, ckpt_dir=self.RUN.ckpt_dir, states=d_states)
+        # misc.save_model(model="G", when=when, step=step, ckpt_dir=self.RUN.ckpt_dir, states=g_states)
+        # misc.save_model(model="D", when=when, step=step, ckpt_dir=self.RUN.ckpt_dir, states=d_states)
+        misc.save_model(model="G", when=when, step=step, ckpt_dir=self.RUN.save_dir, states=g_states)
+        misc.save_model(model="D", when=when, step=step, ckpt_dir=self.RUN.save_dir, states=d_states)
         if self.Gen_ema is not None:
-            misc.save_model(model="G_ema", when=when, step=step, ckpt_dir=self.RUN.ckpt_dir, states=g_ema_states)
+            # misc.save_model(model="G_ema", when=when, step=step, ckpt_dir=self.RUN.ckpt_dir, states=g_ema_states)
+            misc.save_model(model="G_ema", when=when, step=step, ckpt_dir=self.RUN.save_dir, states=g_ema_states)
 
         if when == "best":
-            misc.save_model(model="G", when="current", step=step, ckpt_dir=self.RUN.ckpt_dir, states=g_states)
-            misc.save_model(model="D", when="current", step=step, ckpt_dir=self.RUN.ckpt_dir, states=d_states)
+            # misc.save_model(model="G", when="current", step=step, ckpt_dir=self.RUN.ckpt_dir, states=g_states)
+            # misc.save_model(model="D", when="current", step=step, ckpt_dir=self.RUN.ckpt_dir, states=d_states)
+            misc.save_model(model="G", when="current", step=step, ckpt_dir=self.RUN.save_dir, states=g_states)
+            misc.save_model(model="D", when="current", step=step, ckpt_dir=self.RUN.save_dir, states=d_states)
             if self.Gen_ema is not None:
                 misc.save_model(model="G_ema",
                                 when="current",
                                 step=step,
-                                ckpt_dir=self.RUN.ckpt_dir,
+                                # ckpt_dir=self.RUN.ckpt_dir,
+                                ckpt_dir=self.RUN.save_dir,
                                 states=g_ema_states)
 
         if self.global_rank == 0 and self.logger:
-            self.logger.info("Save model to {}".format(self.RUN.ckpt_dir))
+            # self.logger.info("Save model to {}".format(self.RUN.ckpt_dir))
+            self.logger.info("Save model to {}".format(self.RUN.save_dir))
 
         misc.make_GAN_trainable(self.Gen, self.Gen_ema, self.Dis)
 
@@ -1477,7 +1484,8 @@ class WORKER(object):
 
             if self.local_rank == 0:
                 self.logger.info("Current best accuracy: Top-1: {top1:.4f}% and Top-5 {top5:.4f}%".format(top1=best_top1, top5=best_top5))
-                self.logger.info("Save model to {}".format(self.RUN.ckpt_dir))
+                # self.logger.info("Save model to {}".format(self.RUN.ckpt_dir))
+                self.logger.info("Save model to {}".format(self.RUN.save_dir))
 
     # -----------------------------------------------------------------------------
     # validate GAN_train or GAN_test classifier using generated or training dataset
