@@ -43,8 +43,8 @@ OPTIMIZATION:
   # These values will be slightly changed if lazy regularization is applied.
   # batch_size: 64
   # acml_steps: 1
-  batch_size: 32
-  acml_steps: 2
+  batch_size: 16
+  acml_steps: 4
   g_lr: 0.0025
   d_lr: 0.0025
   beta1: 0
